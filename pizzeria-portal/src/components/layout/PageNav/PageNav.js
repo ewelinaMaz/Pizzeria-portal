@@ -1,19 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import {NavLink} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import styles from './PageNav.module.scss';
 
-const PageNav = (props) => (
-  <nav>
-    <NavLink exact to = {`${process.env.PUBLIC_URL}/`} active className='active'>Home</NavLink>
-    <NavLink to = {`${process.env.PUBLIC_URL}/login`} active className='active'>Login</NavLink>
-    <NavLink to = {`${process.env.PUBLIC_URL}/tables`} active className='active'>Tables</NavLink>
-    <NavLink to = {`${process.env.PUBLIC_URL}/waiter`} active className='active'>Waiter</NavLink>
-    <NavLink to = {`${process.env.PUBLIC_URL}/kitchen`} active className='active'>Kitchen</NavLink>
+const PageNav = () => (
+  /* Użyliśmy komponentu NavLink, aby linki dostawały klasę active kiedy jesteśmy stronie danego widoku. */
+  <nav className = {styles.component}>
+    <Button className = {styles.link} component = {NavLink} exact to = {`${process.env.PUBLIC_URL}/`} activeClassName='active'>Dashboard</Button>
+    <Button className = {styles.link} component = {NavLink} to = {`${process.env.PUBLIC_URL}/login`} activeClassName='active'>Login</Button>
+    <Button className = {styles.link} component = {NavLink} to = {`${process.env.PUBLIC_URL}/tables`} activeClassName='active'>Tables</Button>
+    <Button className = {styles.link} component = {NavLink} to = {`${process.env.PUBLIC_URL}/waiter`} activeClassName='active'>Waiter</Button>
+    <Button className = {styles.link} component = {NavLink} to = {`${process.env.PUBLIC_URL}/kitchen`} activeClassName='active'>Kitchen</Button>
   </nav>
 );
 
 PageNav.propTypes = {
-  children: PropTypes.node,
 };
 
 export default PageNav;

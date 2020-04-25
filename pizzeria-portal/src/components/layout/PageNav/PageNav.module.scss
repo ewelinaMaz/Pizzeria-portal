@@ -2,12 +2,9 @@
 
 .component {
   padding: $base-size;
+  margin-left: auto;
 }
 
-.textField {
-   margin: 0 20px 20px 0;
- }
-
- .link {
-   color: inherit;
- }
+.link {
+  color: inherit;
+}
