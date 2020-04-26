@@ -14,29 +14,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
-
-const styles = {
-  root: {},
-  content: {
-    padding: 0,
-  },
-  inner: {
-    minWidth: 800,
-  },
-  container: {
-    maxHeight: 440,
-  },
-  input_container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    width: 200,
-  },
-  buttons: {
-    marginLeft: 'auto',
-  },
-};
+import styles from './Tables.module.scss';
 
 const Tables = () => {
   const Hours = [];
@@ -58,7 +36,7 @@ const Tables = () => {
   return (
     <Grid container spacing={4}>
       <Grid item lg={8} md={12} xl={9} xs={12}>
-        <Card className={styles.root}>
+        <Card className={styles.component}>
           <CardHeader 
             title = 'Tables'
             action = {
@@ -82,14 +60,14 @@ const Tables = () => {
               className={styles.button}
               component={Link}
               to={`${process.env.PUBLIC_URL}/tables/booking/new`}
-              activeClassName='active'
+              activeclassname='active'
             >New booking
             </Button>
             <Button
               className={styles.button}
               component={Link}
               to={`${process.env.PUBLIC_URL}/tables/events/new`}
-              activeClassName='active'
+              activeclassname='active'
             >New event
             </Button>
           </CardActions>

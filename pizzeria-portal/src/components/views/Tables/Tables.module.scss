@@ -3,3 +3,28 @@
 .component {
   padding: $base-size;
 }
+
+.content {
+   padding: 0;
+ }
+
+ .inner {
+   min-width: 800px;
+ }
+
+ .container {
+   max-height: 440px;
+ }
+
+ .input_container {
+   display: flex;
+   flex-wrap: wrap;
+ }
+
+ .textField {
+   width: 200px;
+ }
+
+ .buttons {
+   margin-left: auto;
+ }
