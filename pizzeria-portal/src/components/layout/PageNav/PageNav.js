@@ -15,7 +15,4 @@ const PageNav = () => (
   </nav>
 );
 
-PageNav.propTypes = {
-};
-
 export default PageNav;
