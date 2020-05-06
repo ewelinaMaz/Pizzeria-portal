@@ -1,4 +1,4 @@
-import {combineReducers, createStore, applyMiddleware} from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -7,7 +7,7 @@ import tablesReducer from './tablesRedux';
 // define initial state and shallow-merge initial data
 const initialState = {
   tables: {
-    data: {},
+    data: [],
     loading: {
       active: false,
       error: false,

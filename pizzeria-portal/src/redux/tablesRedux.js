@@ -3,7 +3,7 @@ import { api } from '../settings';
 
 /* selectors */
 export const getAll = ({tables}) => tables.data;
-export const getLoadingState = ({tables}) => tables.loading;
+export const getLoadingState = ({ tables }) => tables.loading;
 
 /* action name creator */
 const reducerName = 'tables';
@@ -13,17 +13,19 @@ const createActionName = name => `app/${reducerName}/${name}`;
 const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
+const CHANGE_ORDER_STATUS = createActionName('CHANGE_ORDER_STATUS');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
+export const changeOrderStatus = payload => ({ payload, type: CHANGE_ORDER_STATUS });
 
-/* thunk creators */
+/* reducer */
 export const fetchFromAPI = () => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-  
+
     Axios
       .get(`${api.url}/${api.tables}`)
       .then(res => {
@@ -34,8 +36,18 @@ export const fetchFromAPI = () => {
       });
   };
 };
-  
-/* reducer */
+
+
+export const sendOrderStatus = (payload) => {
+  return (dispatch, getState) => {
+
+    Axios
+      .put(`${api.url}/${api.tables}/${payload.id}`, { ...payload })
+      .then(res => {
+        dispatch(changeOrderStatus(res.data));
+      });
+  };
+};
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
     case FETCH_START: {
@@ -64,6 +76,13 @@ export default function reducer(statePart = [], action = {}) {
           active: false,
           error: action.payload,
         },
+      };
+    }
+
+    case CHANGE_ORDER_STATUS: {
+      return {
+        ...statePart,
+        data: statePart.data.map(item => item.id === action.payload.id ? { ...action.payload } : item),
       };
     }
     default:

@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Tables from '../Tables/Tables';
-import Waiter from '../Waiter/Waiter';
+import Waiter from '../Waiter/WaiterContainer';
 
 
 const Dashboard = () =>	{  

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Waiter.module.scss';
-import {Link} from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,16 +8,19 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import {Link} from 'react-router-dom';
 
 class Waiter extends React.Component {
+
   static propTypes = {
     fetchTables: PropTypes.func,
     loading: PropTypes.shape({
       active: PropTypes.bool,
-      error: PropTypes.oneOfType(PropTypes.bool,PropTypes.string),
+      error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     }),
-    tables: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    changeStatus: PropTypes.func,
+    tables: PropTypes.any,
+    sendStatus: PropTypes.func,
   }
 
   componentDidMount(){
@@ -26,43 +28,39 @@ class Waiter extends React.Component {
     fetchTables();
   }
 
-  renderActions (status)  {
+  changeStatus(payload) {
+    const { sendStatus } = this.props;
+    sendStatus(payload);
+  }
+
+  renderActions(status, id){
     switch (status) {
       case 'free':
         return (
           <>
-            <Button
-              component={Link}
-              to={`${process.env.PUBLIC_URL}/waiter/order/new`}
-            >thinking</Button>
-            <Button
-              component={Link}
-              to={`${process.env.PUBLIC_URL}/waiter/order/new`}
-            >new order</Button>
+            <Button onClick={(payload) =>this.changeStatus({ id: id, status: 'thinking'})}>thinking</Button>
+            <Button onClick={(payload) =>this.changeStatus({ id: id, status: 'ordered'})}>new order</Button>
           </>
         );
       case 'thinking':
         return (
-          <Button
-            component={Link}
-            to={`${process.env.PUBLIC_URL}/waiter/order/new`}
-          >new order</Button>
+          <Button onClick={(payload) =>this.changeStatus({ id: id, status: 'ordered'})}>new order</Button>
         );
       case 'ordered':
         return (
-          <Button>prepared</Button>
+          <Button onClick={(payload) =>this.changeStatus({ id: id, status: 'prepared'})}>prepared</Button>
         );
       case 'prepared':
         return (
-          <Button>delivered</Button>
+          <Button onClick={(payload) =>this.changeStatus({ id: id, status: 'delivered'})}>delivered</Button>
         );
       case 'delivered':
         return (
-          <Button>paid</Button>
+          <Button onClick={(payload) =>this.changeStatus({ id: id, status: 'paid'})}>paid</Button>
         );
       case 'paid':
         return (
-          <Button>free</Button>
+          <Button onClick={(payload) =>this.changeStatus({ id: id, status: 'free'})}>free</Button>
         );
       default:
         return null;
@@ -108,18 +106,29 @@ class Waiter extends React.Component {
                   </TableCell>
                   <TableCell>
                     {row.order && (
-                      <Button to={`${process.env.PUBLIC_URL}/waiter/order/${row.order}`}>
+                      <Button component={Link} to={`${process.env.PUBLIC_URL}/waiter/order/${row.order}`}>
                         {row.order}
                       </Button>
                     )}
                   </TableCell>
                   <TableCell>
-                    {this.renderActions(row.status)}
+                    {this.renderActions(row.status, row.id)}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+          <Grid 
+            className={styles.component}
+            container
+            direction="row"
+            justify="center"
+            alignItems="center">
+            <Button 
+              component={Link} to={`${process.env.PUBLIC_URL}/waiter/order/new`}
+              variant="contained" color="primary">
+          New order </Button>
+          </Grid>
         </Paper>
       );
     }
